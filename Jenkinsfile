@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     stages {
-        stage('Build'){
+        stage('Build') {
             agent {
                 docker {
                     image 'node:18-alpine'
@@ -20,11 +20,16 @@ pipeline {
                 '''
             }
         }
-        stage('Test'){
+        stage('Test') {
             steps {
                 sh '''
-                    grep -f build/index.html
-                    npm test
+                if ls build | grep -q 'index.html'; then
+                    echo "File exists"
+                else
+                    echo "File does not exist"
+                    exit 1
+                fi
+                npm test
                 '''
             }
         }
