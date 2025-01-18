@@ -23,7 +23,7 @@ pipeline {
         stage('Test') {
             steps {
                 sh '''
-                if ls build | grep -q 'build\index.html'; then
+                if ls build | grep -q 'index.html'; then
                     echo "File exists"
                 else
                     echo "File does not exist"
